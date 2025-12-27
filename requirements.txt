@@ -1,1 +1,2 @@
-flask\nflask-corc
+flask
+Flask-cors
