@@ -18,6 +18,6 @@ def submit():
     with open("data.txt", "a") as f:
         f.write(f"{name}, {email}\n")
 
-    return jsonify({"message": "Data save ho gaya aur backend ko mil gaya"})
+    return jsonify({"message": "congratulations"})
     
 app.run(port=5000)
