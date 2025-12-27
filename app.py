@@ -2,15 +2,16 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # 👈 ye OPTIONS issue solve karega
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route("/", methods=["GET"])
 def home():
     return "Backend running"
 
-@app.route("/submit", methods=["POST", "OPTIONS"])
+@app.route("/submit", methods=["POST"])
 def submit():
-    data = request.get_json()
+    data = request.get_json(force=True)
+
     name = data.get("name")
     email = data.get("email")
 
