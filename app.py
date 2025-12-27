@@ -1,26 +1,23 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app)  # 👈 ye OPTIONS issue solve karega
 
-@app.route("/submit", methods=["POST"])
+@app.route("/", methods=["GET"])
+def home():
+    return "Backend running"
+
+@app.route("/submit", methods=["POST", "OPTIONS"])
 def submit():
-    data = request.json
+    data = request.get_json()
     name = data.get("name")
     email = data.get("email")
 
-    # Terminal me show
     print("Name:", name)
     print("Email:", email)
 
-    # Data file me save
-    with open("data.txt", "a") as f:
-        f.write(f"{name}, {email}\n")
-
-    return jsonify({"message": "congratulations"})
+    return jsonify({"message": "Congratulations! Data received"}), 200
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=5000)
